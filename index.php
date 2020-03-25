@@ -10,9 +10,10 @@
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><!--Mobile-->
 
     <!-- CSS  -->
+    <link rel="stylesheet" href="../boilerplate_2020.prj/css/master.css">
 
   </head>
   <body>
     <h1>Let's Go</h1>
   </body>
-</html> 
+</html>
