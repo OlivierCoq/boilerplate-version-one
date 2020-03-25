@@ -19,5 +19,9 @@
   "homepage": "https://github.com/OlivierCoq/boilerplate-version-one#readme",
   "dependencies": {
     "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-sass": "^4.0.2"
   }
 }
