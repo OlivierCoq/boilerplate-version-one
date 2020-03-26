@@ -18,10 +18,12 @@
   },
   "homepage": "https://github.com/OlivierCoq/boilerplate-version-one#readme",
   "dependencies": {
-    "lodash": "^4.17.15"
+    "gulp-sass": "^4.0.2",
+    "lodash": "^4.17.15",
+    "node-sass": "^4.13.1"
   },
   "devDependencies": {
     "gulp": "^4.0.2",
-    "gulp-sass": "^4.0.2"
+    "nodemon": "^2.0.2"
   }
 }
