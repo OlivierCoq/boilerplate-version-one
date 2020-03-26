@@ -3,3 +3,25 @@ $body-bg: lightblue;
 body {
   background: $body-bg;
 }
+
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+}
+
+*,*::before,*::after {
+  box-sizing: inherit;
+}
+
+body {
+  padding: 20px;
+  background-color: #cecece;
+  color: black;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.3;
+}
+
+main {
+  background-color: white;
+  padding: 20px;
+}

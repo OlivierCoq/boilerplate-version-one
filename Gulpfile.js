@@ -1,37 +1,71 @@
-const gulp = require('gulp');
-const browserSync = require('browser-sync').create();
+// Initialize modules needed
+const { src, dest, watch, series, parallel } = require('gulp');
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
+const concat = require('gulp-concat');
+const postcss = require('gulp-postcss');
+const replace = require('gulp-replace');
 const sass = require('gulp-sass');
+const sourcemaps = require('gulp-sourcemaps');
+const uglify = require('gulp-uglify');
 
-// function defaultTask(cb) {
-//   // place code for your default task here
-//   cb();
-// }
-//
-// exports.default = defaultTask
+//File path variables
 
-//Compile Sass
+const files = {
+    scssPath: 'library/sass/**/*.scss',
+    jsPath: 'library/js/**/*.js'
+}
 
-gulp.task('sass', function() {
+//Sass task
 
-  return gulp.src(['library/sass/*.scss'])
+function scssTask(){
+  return src(files.scssPath)
+    .pipe(sourcemaps.init())
     .pipe(sass())
-    .pipe(gulp.dest('dist/css'))
-    .pipe(browserSync.stream());
-});
+    .pipe(postcss([ autoprefixer(), cssnano() ]))
+    .pipe(sourcemaps.write('.'))
+    .pipe(dest('dist/css')
+  );
+}
+
+//JS task
+
+function jsTask() {
+  return src(files.jsPath)
+    .pipe(concat('production.js'))
+    .pipe(uglify())
+    .pipe(dest('dist/js')
+  );
+}
+
+// Cachebusting task (This allows your CSS and JS files to upgrade their versions each time to avoid browser loading cached versions)
+
+  //Generates a string based on current time
+const cbString = new Date().getTime();
+
+  //Runs a search + Replace for query string at end of .css and .js files
+function cacheBustTask(){
+  return src(['index.php'])
+    .pipe(replace(/cb=\d+/g, 'cb=' + cbString))
+    .pipe(dest('.'))
+}
+
+//Watch
+function watchTask(){
+    watch([files.scssPath, files.jsPath],
+        {interval: 1000, usePolling: true}, //Makes docker work
+        series(
+            parallel(scssTask, jsTask),
+            cacheBustTask
+        )
+    );
+}
 
 
-//Watch & Serve
-gulp.task('serve', ['sass'], function(){
-  browserSync.init({
-    server: './src'
-  });
+// Default task
 
-gulp.watch(['library/sass/*.scss'], ['sass']);
-gulp.watch(['src/*.php']).on('change', browserSync.reload);
-
-});
-
-
-//Default task
-
-gulp.task('default', ['serve']);
+exports.default = series(
+    parallel(scssTask, jsTask),
+    cacheBustTask,
+    watchTask
+);
