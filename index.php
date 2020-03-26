@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="dist/css/production.css?cb=1585246306159">
+    <link rel="stylesheet" href="dist/css/style.css?cb=1585250207417">
   </head>
   <body>
     <h1>Let's Go</h1>
@@ -22,6 +22,6 @@
 
 
     <!-- JavaScript -->
-      <script src="dist/css/production.js?cb=1585246306159"></script>
+      <script src="dist/css/production.js?cb=1585250207417"></script>
   </body>
 </html>

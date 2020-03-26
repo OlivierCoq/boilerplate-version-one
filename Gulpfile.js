@@ -10,6 +10,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 
 //File path variables
+  //Super helpful, so you don't have to keep writing them over and over. Also, protects from error.
 
 const files = {
     scssPath: 'library/sass/**/*.scss',
@@ -62,7 +63,7 @@ function watchTask(){
 }
 
 
-// Default task
+// Default task when you start gulp in terminal:
 
 exports.default = series(
     parallel(scssTask, jsTask),
