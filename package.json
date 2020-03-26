@@ -24,6 +24,6 @@
   },
   "devDependencies": {
     "gulp": "^4.0.2",
-    "nodemon": "^2.0.2"
+    "gulp-sourcemaps": "^2.6.5"
   }
 }
