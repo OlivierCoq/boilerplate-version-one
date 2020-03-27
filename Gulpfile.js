@@ -8,13 +8,15 @@ const replace = require('gulp-replace');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
+const imagemin = require('gulp-imagemin');
 
 //File path variables
   //Super helpful, so you don't have to keep writing them over and over. Also, protects from error.
 
 const files = {
     scssPath: 'library/sass/**/*.scss',
-    jsPath: 'library/js/**/*.js'
+    jsPath: 'library/js/**/*.js',
+    imgPath: 'library/img/*'
 }
 
 //Sass task
@@ -37,6 +39,25 @@ function jsTask() {
     .pipe(uglify())
     .pipe(dest('dist/js')
   );
+}
+
+
+//Minify Images
+
+function imgSmush() {
+  return src(files.imgPath)
+    .pipe(imagemin([
+      imagemin.gifsicle({interlaced: true}),
+      imagemin.mozjpeg({quality: 75, progressive: true}),
+      imagemin.optipng({optimizationLevel: 5}),
+      imagemin.svgo({
+        plugins: [
+            {removeViewBox: true},
+            {cleanupIDs: false}
+          ]
+        })
+      ]))
+    .pipe(dest('dist/img'));
 }
 
 // Cachebusting task (This allows your CSS and JS files to upgrade their versions each time to avoid browser loading cached versions)
@@ -66,7 +87,7 @@ function watchTask(){
 // Default task when you start gulp in terminal:
 
 exports.default = series(
-    parallel(scssTask, jsTask),
+    parallel(scssTask, jsTask, imgSmush),
     cacheBustTask,
     watchTask
 );
